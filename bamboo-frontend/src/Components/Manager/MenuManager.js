@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../auth/UserContext";
-import { Container, Box, Button, Grid, Typography } from "@material-ui/core";
+import { Container, Box, Button, Grid, Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -11,6 +11,7 @@ const MenuManager = () => {
   const [date, setDate] = useState(new Date());
   const [menus, setMenus] = useState([]);
   const { id, title } = currentUser;
+  const [selectedMenu, setSelectedMenu] = useState()
 
   useEffect(() => {
     search(id);
@@ -20,12 +21,18 @@ const MenuManager = () => {
     setMenus((m) => [...menus]);
   };
 
+  const datePicker = (value) => {
+    console.log(value);
+    setDate()
+  }
+
+
   return (
     <Container maxWidth="md">
       <h2 data-testid="resolved">Menu Manager for {title}</h2>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Calendar onchange={setDate} value={date}></Calendar>
+          <Calendar onChange={datePicker} selectRange={true} value={date}></Calendar>
         </Grid>
         <Grid item xs={3}>
           <Link to="/menus/new_menu" key="New Menu">

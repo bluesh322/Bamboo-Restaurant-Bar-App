@@ -1,6 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Typography, Container, makeStyles, Grid } from "@material-ui/core";
+import {
+  Typography,
+  Container,
+  makeStyles,
+  Grid,
+  Box,
+} from "@material-ui/core";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { WrapperTextField } from "../form-ui/WrapperTextField";
@@ -8,6 +14,7 @@ import WrapperButton from "../form-ui/WrapperButton";
 import WrapperCheckbox from "../form-ui/WrapperCheckbox";
 import BambooApi from "../../api";
 import UserContext from "../auth/UserContext";
+import WrapperDatePicker from "../form-ui/WrapperDatePicker";
 
 const useStyles = makeStyles((theme) => ({
   formWrapper: {
@@ -26,6 +33,8 @@ const CreateMenuForm = () => {
   const INITIAL_STATE = {
     title: "",
     cart: [],
+    startDate: "",
+    endDate: "",
   };
   const history = useHistory();
 
@@ -51,6 +60,8 @@ const CreateMenuForm = () => {
       .max(15, "Must be 15 characters or less")
       .required("Menu Title Required"),
     cart: Yup.array().of(item).min(5, "Your menu must have 5 items"),
+    startDate: Yup.date().required(),
+    endDate: Yup.date().required(),
   });
 
   return (
@@ -65,10 +76,11 @@ const CreateMenuForm = () => {
           onSubmit={async (values, { setSubmitting }) => {
             setSubmitting(true);
 
-            const { title, cart } = values;
+            const { title, cart, startDate, endDate } = values;
             setCart((c) => [...c, ...cart]);
             const menuData = { restaurant_id: user_id, title: title };
-            await BambooApi.createMenu(menuData, cart);
+            const calendarData = { startDate: startDate, endDate: endDate };
+            await BambooApi.createMenu(menuData, cart, calendarData);
             history.push(`/menus`);
             setSubmitting(false);
           }}
@@ -84,6 +96,24 @@ const CreateMenuForm = () => {
                   ></WrapperTextField>
                 </Grid>
               </Grid>
+              <Box mt={2} mb={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <WrapperDatePicker
+                      variant="outlined"
+                      label="start date"
+                      name="startDate"
+                    ></WrapperDatePicker>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <WrapperDatePicker
+                      variant="outlined"
+                      label="end date"
+                      name="endDate"
+                    ></WrapperDatePicker>
+                  </Grid>
+                </Grid>
+              </Box>
               <FieldArray
                 name="cart"
                 render={(arrayHelpers) => (

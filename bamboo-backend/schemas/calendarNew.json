@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://our.company.com/companyNew.schema.json",
+  "type": "object",
+  "properties": {
+    "menu_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "startDate": {
+      "type": "string"
+
+    },
+    "endDate": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["menu_id", "startDate", "endDate"]
+}

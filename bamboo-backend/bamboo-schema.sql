@@ -35,8 +35,8 @@ CREATE TABLE completed_transactions (
     val NUMERIC(2)
 );
 
-CREATE TABLE calendar_events (
-    id INTEGER PRIMARY KEY,
+CREATE TABLE calendars (
+    menu_id INTEGER PRIMARY KEY,
     s_date DATE,
     e_date DATE
 );

@@ -49,18 +49,21 @@ class BambooApi {
       return res.menus;
   }
 
-  static async createMenu(menuData, itemData) {
+  static async createMenu(menuData, itemData, calendarData) {
     const {restaurant_id, title} = menuData;
-    console.log(menuData);
     let res = await this.request(`menus/`, {restaurant_id, title}, "post");
-    console.log(res.menu);
     const menu_id = res.menu.id;
 
     for(let item of itemData) {
       let item_id = item.id
       res = await this.request(`menus/menu_item`, {menu_id, item_id}, "post");
     }
-    return res.menu;
+
+    calendarData.menu_id = menu_id;
+
+    res = await this.request(`calendars/`, calendarData, "post")
+
+    return res;
   }
 
   static async createItem(itemData) {

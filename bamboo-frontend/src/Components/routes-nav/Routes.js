@@ -24,24 +24,24 @@ const Routes = ({ login, register }) => {
       <Route exact path="/login">
         <LoginForm login={login}></LoginForm>
       </Route>
-      <Route exact path="/menus">
+      <PrivateRoute exact path="/menus">
         <MenuManager></MenuManager>
-      </Route>
-      <Route exact path="/table">
+      </PrivateRoute>
+      <PrivateRoute exact path="/table">
         <Table></Table>
-      </Route>
-      <Route exact path="/table/menu/:cust_id">
+      </PrivateRoute>
+      <PrivateRoute exact path="/table/menu/:cust_id">
         <CustomerMenu></CustomerMenu>
-      </Route>
-      <Route exact path="/table/checkout/:cust_id">
+      </PrivateRoute>
+      <PrivateRoute exact path="/table/checkout/:cust_id">
         <CloseTabForm></CloseTabForm>
-      </Route>
-      <Route exact path="/menus/new_menu">
+      </PrivateRoute>
+      <PrivateRoute exact path="/menus/new_menu">
         <CreateMenuForm></CreateMenuForm>
-      </Route>
-      <Route exact path="/menus/:id">
+      </PrivateRoute>
+      <PrivateRoute exact path="/menus/:id">
         <EditMenuForm></EditMenuForm>
-      </Route>
+      </PrivateRoute>
       {/* <Route exact path="/query">
           <Query></Query>
       </Route> */}

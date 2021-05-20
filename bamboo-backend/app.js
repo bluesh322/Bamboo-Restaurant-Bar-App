@@ -13,6 +13,7 @@ const usersRoutes = require("./routes/users");
 const menusRoutes = require("./routes/menus");
 const itemsRoutes = require("./routes/items");
 const stripeRoutes = require("./routes/stripe");
+const calendarsRoutes = require("./routes/calendars");
 
 const morgan = require("morgan");
 
@@ -30,6 +31,7 @@ app.use("/users", usersRoutes);
 app.use("/menus", menusRoutes);
 app.use("/items", itemsRoutes);
 app.use("/stripe", stripeRoutes);
+app.use("/calendars", calendarsRoutes);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
