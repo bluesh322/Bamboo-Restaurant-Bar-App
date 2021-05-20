@@ -14,7 +14,6 @@ const Table = () => {
   useEffect(() => {
     const getCustomers = async () => {
       if (customers.length === 0) {
-        console.log(customersStorage);
         if (customersStorage !== null) {
           setCustomers((c) => [...customersStorage]);
         }

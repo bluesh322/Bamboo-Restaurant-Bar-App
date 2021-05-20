@@ -19,7 +19,9 @@ import { Link, useParams } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import BambooApi from "../../api";
 import TableContext from "./TableContext";
+import { useHistory } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { ArtTrack } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -45,18 +47,23 @@ const CloseTab = () => {
     cartsStorage,
     handleCartsStorage,
   } = useContext(TableContext);
+  const [carts, setCart] = useState(cartsStorage);
+  const [customers, setCustomers] = useState(customersStorage);
+  const history = useHistory();
   const { cust_id } = useParams();
 
-  console.log(cartsStorage);
   console.log(cust_id);
-  console.log(apitoken);
+  console.log("carts", carts);
+  console.log("customers", customers);
 
   const cartTotal = () => {
     let total = 0.0;
-    for (let c of cartsStorage[cust_id]) {
-      total += +c.price * c.amount;
+    if (cartsStorage && cartsStorage[cust_id]) {
+      for (let c of cartsStorage[cust_id]) {
+        total += +c.price * c.amount;
+      }
+      return total.toFixed(2);
     }
-    return total.toFixed(2);
   };
 
   const product = {
@@ -72,14 +79,35 @@ const CloseTab = () => {
     BambooApi.token = apitoken;
     try {
       let res = BambooApi.payment(body);
+      let id = cust_id;
+      setCart((prev) =>
+        Object.keys(prev).reduce((acc, key) => {
+          if (key !== id) {
+            acc[key] = prev[key];
+          }
+          return acc;
+        }, {})
+      );
+      setCustomers((prev) =>
+        prev.reduce((acc, item) => {
+          if (item.id === id) {
+            return acc;
+          } else {
+            return [...acc, item];
+          }
+        }, [])
+      );
+      console.log(carts);
+      handleCartsStorage(carts);
+      handleCustomerStorage(customers);
+      console.log(cartsStorage);
+      console.log(customersStorage);
+      history.push(`/table`);
       return { success: true };
     } catch (errors) {
       console.log("payment failed", errors);
       return { success: false, errors };
     }
-    console.log("res", res);
-    const { status } = res;
-    console.log("status", status);
   };
 
   return cartsStorage && cartsStorage[cust_id] ? (

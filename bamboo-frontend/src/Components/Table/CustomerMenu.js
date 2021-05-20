@@ -56,7 +56,7 @@ const CustomerMenu = () => {
             let storageItem = cartsStorage[cust_id];
             const item = storageItem;
 
-            return [...item];
+            return [...prev, ...item];
           });
         }
       } else {
