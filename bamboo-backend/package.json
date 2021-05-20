@@ -1,7 +1,7 @@
 {
-  "name": "jobly-mybackend",
+  "name": "bamboo-backend",
   "version": "1.0.0",
-  "description": "backend for jobly app",
+  "description": "backend for bamboo app",
   "engines": {
     "node": "14.15.1",
     "npm": "6.14.8"
