@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.company.com/companyNew.schema.json",
+    "type": "object",
+    "properties": {
+      "restaurant_id": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 25
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "restaurant_id",
+      "title"
+    ]
+  }
