@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 import UserContext from "../auth/UserContext";
-import TableContext from "../Table/TableContext"
+import TableContext from "../Table/TableContext";
 import "./Navbar.css";
 
 const useStyles = makeStyles({
@@ -32,11 +32,11 @@ const NavBar = ({ logout }) => {
   const loggedInNav = () => {
     return (
       <Container maxWidth="md" className={classes.navDisplayFlex}>
-        <IconButton edge="start" color="inherit" aria-label="home">
-          <Link to="/menus">
+        <Link to="/menus">
+          <IconButton edge="start" color="inherit" aria-label="home">
             <Home fontSize="large"></Home>
-          </Link>
-        </IconButton>
+          </IconButton>
+        </Link>
         <List
           className={classes.navDisplayFlex}
           component="nav"
@@ -70,11 +70,12 @@ const NavBar = ({ logout }) => {
   const loggedOutNav = () => {
     return (
       <Container maxWidth="md" className={classes.navDisplayFlex}>
-        <IconButton edge="start" color="inherit" aria-label="home">
-          <Link to="/">
+        <Link to="/">
+          <IconButton edge="start" color="inherit" aria-label="home">
             <Home fontSize="large"></Home>
-          </Link>
-        </IconButton>
+          </IconButton>
+        </Link>
+
         <List
           className={classes.navDisplayFlex}
           component="nav"
@@ -98,17 +99,22 @@ const NavBar = ({ logout }) => {
   const tableNav = () => {
     return (
       <Container maxWidth="md" className={classes.navDisplayFlex}>
-        <IconButton onClick={toggleTable} edge="start" color="inherit" aria-label="home">
-          <Link to="/menus" >
+        <Link to="/menus">
+          <IconButton
+            onClick={toggleTable}
+            edge="start"
+            color="inherit"
+            aria-label="home"
+          >
             <ListItemText primary="Exit Table"></ListItemText>
-          </Link>
-        </IconButton>
+          </IconButton>
+        </Link>
+
         <List
           className={classes.navDisplayFlex}
           component="nav"
           aria-labelledby="main navigation"
-        >
-        </List>
+        ></List>
       </Container>
     );
   };

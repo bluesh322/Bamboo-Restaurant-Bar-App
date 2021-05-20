@@ -88,12 +88,20 @@ const App = () => {
     setCartsStorage(carts);
   }
 
+  const [product, setProduct] = useState({
+    name: "Cart Total",
+    price: 10,
+    productBy: "Ya boy",
+  });
+
+
+
   if (!infoLoaded) return <span data-testid="loading">Loading ...</span>;
 
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser}}>
-        <TableContext.Provider value={{ table, toggleTable, customersStorage, handleCustomerStorage, cartsStorage, handleCartsStorage }}>
+        <TableContext.Provider value={{ table, toggleTable, customersStorage, handleCustomerStorage, cartsStorage, handleCartsStorage}}>
         <div className="App">
           <NavBar logout={logout} />
           <Grid item xs={12}>

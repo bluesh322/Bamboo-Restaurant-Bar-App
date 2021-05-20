@@ -10,6 +10,7 @@ import CustomerMenu from "../Table/CustomerMenu";
 import CreateMenuForm from "../Manager/CreateMenuForm";
 import EditMenuForm from "../Manager/EditMenuForm"
 import Query from "../query_api/Query";
+import CloseTabForm from "../Table/CloseTabForm";
 
 const Routes = ({ login, register }) => {
   return (
@@ -33,7 +34,7 @@ const Routes = ({ login, register }) => {
         <CustomerMenu></CustomerMenu>
       </Route>
       <Route exact path="/table/checkout/:cust_id">
-          
+        <CloseTabForm></CloseTabForm>
       </Route>
       <Route exact path="/menus/new_menu">
         <CreateMenuForm></CreateMenuForm>

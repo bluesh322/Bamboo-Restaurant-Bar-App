@@ -87,7 +87,10 @@ class BambooApi {
     return res.msg;
   }
 
-
+  static async payment(body) {
+    let res = await this.request(`stripe/payment`, body, "post");
+    return res;
+  }
 
 }
 

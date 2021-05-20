@@ -2,9 +2,9 @@ import React from "react";
 import { IconButton } from "@material-ui/core"
 import { Add, Remove} from "@material-ui/icons"
 
-const CartIcons = ({ id, price, addItem, removeItem}) =>{
+const CartIcons = ({ id, price, name, addItem, removeItem}) =>{
     const add = () => {
-        addItem(id, price);
+        addItem(id, price, name);
     }
 
     const remove = () => {

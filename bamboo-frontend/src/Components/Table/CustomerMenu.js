@@ -6,7 +6,7 @@ import {
   Card,
   CardContent,
   Grid,
-  Box
+  Box,
 } from "@material-ui/core";
 import TableContext from "./TableContext";
 import UserContext from "../auth/UserContext";
@@ -27,8 +27,7 @@ const CustomerMenu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [loaded, setLoaded] = useState(false);
-
-  console.log(cart);
+  const [emptyStorage, setEmptyStorage] = useState(false);
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -51,20 +50,35 @@ const CustomerMenu = () => {
 
   useEffect(() => {
     const setCurrentCart = async () => {
-      if (cart.length === 0) {
-        await setCart((c) => [...cartsStorage]);
+      if (cart.length === 0 && !emptyStorage) {
+        if (cartsStorage && cartsStorage[cust_id]) {
+          setCart((prev) => {
+            let storageItem = cartsStorage[cust_id];
+            const item = storageItem;
+
+            return [...item];
+          });
+        }
       } else {
-        handleCartsStorage(cart);
+        let storageWithId;
+        if (cartsStorage) {
+          storageWithId = cartsStorage;
+          storageWithId[cust_id] = [...cart];
+        } else {
+          storageWithId = {};
+          storageWithId[cust_id] = [...cart];
+        }
+        handleCartsStorage(storageWithId);
       }
       setLoaded((e) => !e);
     };
     if (!loaded) {
       setCurrentCart();
     }
-  }, [cartsStorage, cart]);
+  }, [cartsStorage, loaded, cart, emptyStorage]);
 
-  const addItem = (id, price) => {
-    const item = [{ id, price, amount: 1 }];
+  const addItem = (id, price, name) => {
+    const item = [{ id, price, amount: 1, name }];
     setCart((prev) => {
       const isItemInCart = prev.find((item) => item.id === id);
 
@@ -89,6 +103,7 @@ const CustomerMenu = () => {
         }
       }, [])
     );
+    setEmptyStorage((e) => !e);
     setLoaded((e) => !e);
   };
 
@@ -118,7 +133,14 @@ const CustomerMenu = () => {
     <Container maxWidth="md" fixed>
       <Box mt={2}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={1}>
+            <Link to={`/table`}>
+              <Button size="small" variant="contained" color="secondary">
+                Back
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={5}>
             <Typography variant="h4">Add Items to Your Cart</Typography>
           </Grid>
           <Grid item xs={2}>
@@ -159,6 +181,7 @@ const CustomerMenu = () => {
                   <CartIcons
                     id={id}
                     price={price}
+                    name={name}
                     addItem={addItem}
                     removeItem={removeItem}
                   ></CartIcons>
